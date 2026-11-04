@@ -1,19 +1,24 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.tidybytetools/link-check-lite",
+  "title": "link-check-lite",
   "description": "Check web links for status codes, broken links and redirect chains.",
   "repository": {
     "url": "https://github.com/tidybytetools/link-check-lite",
     "source": "github"
   },
+  "websiteUrl": "https://github.com/tidybytetools/link-check-lite",
   "version": "1.0.0",
   "packages": [
     {
       "registryType": "pypi",
+      "registryBaseUrl": "https://pypi.org",
       "identifier": "link-check-lite",
       "version": "1.0.0",
       "runtimeHint": "uvx",
-      "transport": { "type": "stdio" }
+      "transport": {
+        "type": "stdio"
+      }
     }
   ]
 }

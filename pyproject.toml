@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,23 +7,35 @@ name = "link-check-lite"
 version = "1.0.0"
 description = "Check a file of links for status codes and redirects. Has a CLI and an MCP server."
 readme = "README.md"
-license = {text = "MIT"}
-authors = [{name = "tidybyte"}]
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "Tidy Byte Tools"}]
 requires-python = ">=3.10"
-dependencies = ["mcp>=1.2,<2"]
-keywords = ["links", "broken-links", "redirects", "http", "status-code", "cli", "mcp", "mcp-server"]
+dependencies = [
+  "mcp>=1.2,<2",
+]
+keywords = ["links", "link-checker", "broken-links", "redirects", "http", "status-code", "cli", "mcp", "mcp-server"]
 classifiers = [
-  "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
-  "Operating System :: OS Independent",
+  "Development Status :: 4 - Beta",
   "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: End Users/Desktop",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Internet :: WWW/HTTP :: Site Management :: Link Checking",
+  "Topic :: Utilities",
 ]
 
 [project.urls]
-"Paid version" = "https://tidybyte.gumroad.com"
+Homepage = "https://tidybyte.gumroad.com"
 Source = "https://github.com/tidybytetools/link-check-lite"
-Shop = "https://tidybyte.gumroad.com"
+Issues = "https://github.com/tidybytetools/link-check-lite/issues"
+Changelog = "https://github.com/tidybytetools/link-check-lite/blob/main/CHANGELOG.md"
 
 [project.scripts]
 link-check-lite = "link_check_lite:main"

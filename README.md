@@ -1,6 +1,6 @@
 # link-check-lite
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/tidybytetools/link-check-lite/blob/main/LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![MCP server](https://img.shields.io/badge/MCP-stdio-purple.svg)](#use-it-from-claude-desktop-or-cursor-mcp)
 
@@ -9,7 +9,21 @@ Need sitemaps, speed checks, sketchy-domain warnings or CSV reports? The paid ve
 
 MIT license. Python 3.10 or newer, on Windows, Mac and Linux. The checker itself uses only Python's built-in tools.
 
+<!-- mcp-name: io.github.tidybytetools/link-check-lite -->
+
 ## Install
+
+```
+pip install link-check-lite
+```
+
+Or use pipx, which keeps it in its own space:
+
+```
+pipx install link-check-lite
+```
+
+Want the newest code from GitHub instead?
 
 ```
 pip install git+https://github.com/tidybytetools/link-check-lite
@@ -80,7 +94,7 @@ If you need to crawl a big site or check links inside Markdown files, lychee and
 There is a small free MCP server built in. It gives your AI app one tool, `check_links`. It needs [uv](https://docs.astral.sh/uv/).
 
 ```
-uvx --from git+https://github.com/tidybytetools/link-check-lite link-check-lite-mcp
+uvx --from link-check-lite link-check-lite-mcp
 ```
 
 Claude Desktop (`claude_desktop_config.json`) or Cursor (`~/.cursor/mcp.json`):
@@ -90,7 +104,7 @@ Claude Desktop (`claude_desktop_config.json`) or Cursor (`~/.cursor/mcp.json`):
   "mcpServers": {
     "link-check-lite": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/tidybytetools/link-check-lite", "link-check-lite-mcp"]
+      "args": ["--from", "link-check-lite", "link-check-lite-mcp"]
     }
   }
 }
@@ -112,7 +126,7 @@ print(check_link("https://example.com"))
 - **Don't use when:** you need to know if a link is safe, need a whole site crawled, or need speed or https checks. Use the paid version for those.
 - **Input:** a list of http(s) URLs (max 200 per MCP call), plus an optional `timeout` in seconds.
 - **Output:** a list of `{url, status, ok, final_url, redirects, error}`. `status` is null when the link could not connect. `ok` is true for 200-399. `redirects` lists each hop as `"CODE url"`.
-- CLI exit code is 0 when all links work and 1 when any link is broken or on error. See also [`llms.txt`](llms.txt).
+- CLI exit code is 0 when all links work and 1 when any link is broken or on error. See also [`llms.txt`](https://github.com/tidybytetools/link-check-lite/blob/main/llms.txt).
 
 ## Tests
 
