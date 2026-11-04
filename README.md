@@ -140,7 +140,7 @@ print(check_link("https://example.com"))
 ## Tests
 
 ```
-pip install "mcp>=1.2,<2"
+pip install "mcp>=1.10,<2"
 python3 -m unittest discover tests
 ```
 

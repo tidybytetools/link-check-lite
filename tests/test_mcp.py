@@ -32,6 +32,12 @@ class T(unittest.TestCase):
                     await s.initialize()
                     tools = await s.list_tools()
                     self.assertEqual([t.name for t in tools.tools], ["check_links"])
+                    ann = tools.tools[0].annotations
+                    self.assertIsNotNone(ann)
+                    self.assertIs(ann.readOnlyHint, True)
+                    self.assertIs(ann.destructiveHint, False)
+                    self.assertIs(ann.idempotentHint, True)
+                    self.assertIs(ann.openWorldHint, True)
                     res = await s.call_tool("check_links", {"urls": [self.b + "/a", self.b + "/gone"]})
                     self.assertFalse(res.isError)
                     data = res.structuredContent["result"] if res.structuredContent else [json.loads(c.text) for c in res.content]

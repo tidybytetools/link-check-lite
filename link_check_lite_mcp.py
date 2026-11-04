@@ -3,14 +3,30 @@
 Run:  uvx --from git+https://github.com/tidybytetools/link-check-lite link-check-lite-mcp
 """
 from mcp.server.fastmcp import FastMCP
+from mcp.types import ToolAnnotations
 import link_check_lite as lite
 
 mcp = FastMCP("link-check-lite")
 
 
-@mcp.tool()
+@mcp.tool(
+    title="Check links",
+    annotations=ToolAnnotations(
+        title="Check links",
+        readOnlyHint=True,       # only reads; changes nothing
+        destructiveHint=False,
+        idempotentHint=True,     # repeat calls have no extra effect
+        openWorldHint=True,      # makes web requests to the given URLs
+    ),
+)
 def check_links(urls: list[str], timeout: float = 10.0) -> list[dict]:
     """Check web links and follow their redirects.
+
+    Use this when you have a list of URLs and need to know which ones work, which
+    are broken (404, 500, timeouts, bad hosts) and where redirects end up, for
+    example to clean up docs, a README, a sitemap list or bookmarks. It does not
+    crawl a site or read page content; pass the exact links you want checked.
+    Links that are not http or https come back with ok false and an error.
 
     urls: up to 200 http(s) links.
     timeout: seconds to wait for each link.
