@@ -21,7 +21,7 @@ classifiers = [
 ]
 
 [project.urls]
-"Paid version" = "https://tidybyte.gumroad.com/l/LINK_CHECK_PAID_URL"
+"Paid version" = "https://tidybyte.gumroad.com"
 Source = "https://github.com/tidybytetools/link-check-lite"
 Shop = "https://tidybyte.gumroad.com"
 

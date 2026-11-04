@@ -3,13 +3,13 @@
 
 Free and MIT licensed. Paid version (sitemaps, CSV input, speed, https checks,
 odd-domain warnings, robots.txt, CSV/JSON/Markdown reports):
-https://tidybyte.gumroad.com/l/LINK_CHECK_PAID_URL
+https://tidybyte.gumroad.com
 """
 import argparse, sys, time, urllib.error, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
 __version__ = "1.0.0"
-PAID_URL = "https://tidybyte.gumroad.com/l/LINK_CHECK_PAID_URL"
+PAID_URL = "https://tidybyte.gumroad.com"
 UA = "link-check-lite/1.0 (+https://github.com/tidybytetools/link-check-lite)"
 MAX_HOPS = 10
 
