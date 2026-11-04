@@ -214,6 +214,22 @@ gemini extensions install https://github.com/tidybytetools/link-check-lite
 
 Tool: `check_links(urls, timeout=10.0)`. Send up to 200 links. It returns one result per link.
 
+## Use it in GitHub Actions
+
+Check your links every time you push. Put your links in a text file, one per line. Then add this step to a workflow:
+
+```yaml
+- uses: actions/checkout@v7
+- uses: tidybytetools/link-check-lite@main
+  with:
+    file: links.txt          # one link per line
+    # fail-on-broken: "false"  # pass even if some links are broken
+```
+
+The step fails if any link is broken. It also writes a short report to the run summary. It gives you three outputs: `checked`, `ok` and `broken`. Other settings are `workers`, `timeout`, `version` and `python-version`. See [action.yml](action.yml).
+
+The action is not on the GitHub Marketplace yet. Use `@main` for now. A version tag will come with the next release.
+
 ## Use it from Python
 
 ```python

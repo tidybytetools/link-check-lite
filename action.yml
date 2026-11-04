@@ -1,0 +1,104 @@
+name: "Link Check Lite"
+description: "Check a list of links for broken pages and redirects. Free, no API key."
+author: "Tidy Byte Tools"
+branding:
+  icon: "link"
+  color: "green"
+
+inputs:
+  file:
+    description: "Text file with one link per line. Lines that start with # are skipped."
+    required: false
+    default: "links.txt"
+  workers:
+    description: "How many links to check at the same time."
+    required: false
+    default: "5"
+  timeout:
+    description: "Seconds to wait for each link."
+    required: false
+    default: "10"
+  fail-on-broken:
+    description: "Set to false to pass the step even when some links are broken."
+    required: false
+    default: "true"
+  version:
+    description: "link-check-lite version from PyPI. Leave empty for the newest."
+    required: false
+    default: ""
+  python-version:
+    description: "Python version to set up."
+    required: false
+    default: "3.12"
+
+outputs:
+  checked:
+    description: "How many links were checked."
+    value: ${{ steps.check.outputs.checked }}
+  ok:
+    description: "How many links were OK."
+    value: ${{ steps.check.outputs.ok }}
+  broken:
+    description: "How many links were broken."
+    value: ${{ steps.check.outputs.broken }}
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-python@v7
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install link-check-lite
+      shell: bash
+      env:
+        LCL_VERSION: ${{ inputs.version }}
+      run: |
+        if [ -n "$LCL_VERSION" ]; then
+          python -m pip install --disable-pip-version-check -q "link-check-lite==$LCL_VERSION"
+        else
+          python -m pip install --disable-pip-version-check -q link-check-lite
+        fi
+
+    - name: Check links
+      id: check
+      shell: bash
+      env:
+        LCL_FILE: ${{ inputs.file }}
+        LCL_WORKERS: ${{ inputs.workers }}
+        LCL_TIMEOUT: ${{ inputs.timeout }}
+        LCL_FAIL: ${{ inputs.fail-on-broken }}
+      run: |
+        set +e
+        out="$RUNNER_TEMP/link-check-lite.txt"
+        link-check-lite -q -w "$LCL_WORKERS" --timeout "$LCL_TIMEOUT" "$LCL_FILE" > "$out"
+        code=$?
+        set -e
+        cat "$out"
+        summary=$(grep -E '^[0-9]+ checked, [0-9]+ ok, [0-9]+ broken$' "$out" | tail -n 1 || true)
+        if [ -z "$summary" ]; then
+          echo "::error::link-check-lite could not run (exit code $code). Check the file path: $LCL_FILE"
+          exit 1
+        fi
+        read -r checked _ ok _ broken _ <<< "${summary//,/}"
+        {
+          echo "checked=$checked"
+          echo "ok=$ok"
+          echo "broken=$broken"
+        } >> "$GITHUB_OUTPUT"
+        {
+          echo "### Link Check Lite"
+          echo
+          echo "$summary"
+          echo
+          echo '```'
+          grep -E '^FAIL' "$out" || echo "No broken links."
+          echo '```'
+        } >> "$GITHUB_STEP_SUMMARY"
+        if [ "$broken" != "0" ]; then
+          grep -E '^FAIL' "$out" | while IFS= read -r line; do echo "::warning::$line"; done
+          if [ "$LCL_FAIL" = "true" ]; then
+            echo "::error::$broken broken link(s) found."
+            exit 1
+          fi
+        fi

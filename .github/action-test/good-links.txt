@@ -1,0 +1,3 @@
+# Links that should work
+https://example.com
+https://github.com

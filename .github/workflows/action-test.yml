@@ -1,0 +1,67 @@
+name: Action test
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  good-links:
+    name: Good links pass
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - id: lc
+        uses: ./
+        with:
+          file: .github/action-test/good-links.txt
+      - name: Check the outputs
+        run: |
+          test "${{ steps.lc.outputs.checked }}" = "2"
+          test "${{ steps.lc.outputs.broken }}" = "0"
+
+  broken-link-fails:
+    name: A broken link fails the step
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - id: lc
+        uses: ./
+        continue-on-error: true
+        with:
+          file: .github/action-test/bad-links.txt
+      - name: Check that the step failed
+        run: |
+          test "${{ steps.lc.outcome }}" = "failure"
+          test "${{ steps.lc.outputs.broken }}" = "1"
+
+  broken-link-allowed:
+    name: fail-on-broken false lets the step pass
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - id: lc
+        uses: ./
+        with:
+          file: .github/action-test/bad-links.txt
+          fail-on-broken: "false"
+      - name: Check the outputs
+        run: |
+          test "${{ steps.lc.outputs.checked }}" = "2"
+          test "${{ steps.lc.outputs.ok }}" = "1"
+          test "${{ steps.lc.outputs.broken }}" = "1"
+
+  missing-file-fails:
+    name: A missing file fails the step
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - id: lc
+        uses: ./
+        continue-on-error: true
+        with:
+          file: does-not-exist.txt
+      - name: Check that the step failed
+        run: test "${{ steps.lc.outcome }}" = "failure"

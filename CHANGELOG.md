@@ -2,6 +2,10 @@
 
 What changed in link-check-lite, newest first.
 
+## Unreleased
+
+- New: a GitHub Action (`action.yml`). Add `uses: tidybytetools/link-check-lite@main` to a workflow to check a links file on every push.
+
 ## 1.1.1 - 2026-11-04
 
 - Fix: installing from the MCP Registry now starts the MCP server. Before, it started the plain command-line tool by mistake.
