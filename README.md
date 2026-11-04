@@ -11,9 +11,14 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/tidybytetools/link-check-lite/blob/main/LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
-[![MCP server](https://img.shields.io/badge/MCP-stdio-purple.svg)](#use-it-from-claude-desktop-or-cursor-mcp)
+[![MCP server](https://img.shields.io/badge/MCP-stdio-purple.svg)](#use-it-with-your-ai-app-mcp)
+[![MCP Registry](https://img.shields.io/badge/MCP_Registry-listed-green.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.tidybytetools/link-check-lite)
+[![PyPI downloads](https://img.shields.io/pypi/dm/link-check-lite.svg)](https://pypistats.org/packages/link-check-lite)
+[![Glama score](https://glama.ai/mcp/servers/tidybytetools/link-check-lite/badges/score.svg)](https://glama.ai/mcp/servers/tidybytetools/link-check-lite)
 
-Free tool that checks a list of links. It tells you which ones work, which are broken, and where redirects end up.
+**Free. No API key. Runs on your own computer. It only visits the links you give it.**
+
+A tool that checks a list of links. It tells you which ones work, which are broken, and where redirects end up.
 Need sitemaps, speed checks, sketchy-domain warnings or CSV reports? The paid version does that: **[link-check on Gumroad](https://tidybyte.gumroad.com)**
 
 MIT license. Python 3.10 or newer, on Windows, Mac and Linux. The checker itself uses only Python's built-in tools.
@@ -98,15 +103,21 @@ All of these are free. Pick what fits you.
 
 If you need to crawl a big site or check links inside Markdown files, lychee and linkchecker are great.
 
-## Use it from Claude Desktop or Cursor (MCP)
+## Use it with your AI app (MCP)
 
-There is a small free MCP server built in. It gives your AI app one tool, `check_links`. It needs [uv](https://docs.astral.sh/uv/).
+There is a small free MCP server built in. It gives your AI app one tool, `check_links`. No API key or account is needed. It needs [uv](https://docs.astral.sh/uv/), which gives you the `uvx` command.
+
+Run it by hand to check it starts (it waits quietly for an app to talk to it):
 
 ```
 uvx --from link-check-lite link-check-lite-mcp
 ```
 
-Claude Desktop (`claude_desktop_config.json`) or Cursor (`~/.cursor/mcp.json`):
+Pick your app below and copy the block. Restart the app after you save.
+
+### Claude Desktop
+
+Open **Settings > Developer > Edit Config**. That opens `claude_desktop_config.json`. Add this:
 
 ```json
 {
@@ -117,6 +128,78 @@ Claude Desktop (`claude_desktop_config.json`) or Cursor (`~/.cursor/mcp.json`):
     }
   }
 }
+```
+
+If Claude says it can't find `uvx`, run `which uvx` (Mac/Linux) or `where uvx` (Windows) and put that full path in `"command"`.
+
+### Cursor
+
+Put the same block in `~/.cursor/mcp.json` (all projects) or `.cursor/mcp.json` (one project):
+
+```json
+{
+  "mcpServers": {
+    "link-check-lite": {
+      "command": "uvx",
+      "args": ["--from", "link-check-lite", "link-check-lite-mcp"]
+    }
+  }
+}
+```
+
+### VS Code
+
+VS Code uses `servers`, not `mcpServers`. Put this in `.vscode/mcp.json` in your project, or run **MCP: Open User Configuration** to use it everywhere:
+
+```json
+{
+  "servers": {
+    "link-check-lite": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--from", "link-check-lite", "link-check-lite-mcp"]
+    }
+  }
+}
+```
+
+Or add it with one command:
+
+```
+code --add-mcp '{"name":"link-check-lite","type":"stdio","command":"uvx","args":["--from","link-check-lite","link-check-lite-mcp"]}'
+```
+
+### Cline
+
+In the Cline panel, click the **MCP Servers** icon, open **Configure**, then click **Configure MCP Servers**. Add this inside `mcpServers`:
+
+```json
+{
+  "mcpServers": {
+    "link-check-lite": {
+      "command": "uvx",
+      "args": ["--from", "link-check-lite", "link-check-lite-mcp"],
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
+
+### Codex
+
+One command:
+
+```
+codex mcp add link-check-lite -- uvx --from link-check-lite link-check-lite-mcp
+```
+
+Or add this to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.link-check-lite]
+command = "uvx"
+args = ["--from", "link-check-lite", "link-check-lite-mcp"]
 ```
 
 Tool: `check_links(urls, timeout=10.0)`. Send up to 200 links. It returns one result per link.
