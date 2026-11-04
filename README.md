@@ -113,6 +113,8 @@ Run it by hand to check it starts (it waits quietly for an app to talk to it):
 uvx --from link-check-lite link-check-lite-mcp
 ```
 
+Shorter way to start the same server: `uvx link-check-lite mcp`.
+
 Pick your app below and copy the block. Restart the app after you save.
 
 ### Claude Desktop

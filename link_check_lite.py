@@ -8,7 +8,7 @@ https://tidybyte.gumroad.com
 import argparse, sys, time, urllib.error, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 PAID_URL = "https://tidybyte.gumroad.com"
 UA = "link-check-lite/1.0 (+https://github.com/tidybytetools/link-check-lite)"
 MAX_HOPS = 10
@@ -81,7 +81,20 @@ def check_links(urls, workers=5, timeout=10.0, delay=0.5):
         return list(ex.map(job, enumerate(urls)))
 
 
+def run_mcp():
+    """Start the stdio MCP server (needs the mcp package, which pip installs for you)."""
+    try:
+        import link_check_lite_mcp
+    except ImportError as e:
+        print(f"error: the MCP server needs the mcp package ({e}). Run: pip install link-check-lite", file=sys.stderr)
+        return 1
+    link_check_lite_mcp.main()
+    return 0
+
 def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if argv == ["mcp"]:
+        return run_mcp()
     ap = argparse.ArgumentParser(prog="link-check-lite", description="Check a file of links for status codes and redirects.")
     ap.add_argument("file", help="text file, one link per line (# lines are skipped)")
     ap.add_argument("-w", "--workers", type=int, default=5, help="links at the same time (default 5)")
