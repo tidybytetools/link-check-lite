@@ -2,9 +2,10 @@
 
 What changed in link-check-lite, newest first.
 
-## Unreleased
+## Action v1.1.2 - 2026-11-04
 
-- New: a GitHub Action (`action.yml`). Add `uses: tidybytetools/link-check-lite@main` to a workflow to check a links file on every push.
+- New: a GitHub Action (`action.yml`), now on the GitHub Marketplace. Add `uses: tidybytetools/link-check-lite@v1` to a workflow to check a links file on every push.
+- This release only added the action. The Python package stays at 1.1.1 on PyPI.
 
 ## 1.1.1 - 2026-11-04
 

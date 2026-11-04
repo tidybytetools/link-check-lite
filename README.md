@@ -216,19 +216,38 @@ Tool: `check_links(urls, timeout=10.0)`. Send up to 200 links. It returns one re
 
 ## Use it in GitHub Actions
 
-Check your links every time you push. Put your links in a text file, one per line. Then add this step to a workflow:
+[Link Check Lite is on the GitHub Marketplace.](https://github.com/marketplace/actions/link-check-lite) Check your links every time you push. Put your links in a text file, one per line. Then add this step to a workflow:
 
 ```yaml
 - uses: actions/checkout@v7
-- uses: tidybytetools/link-check-lite@main
+- uses: tidybytetools/link-check-lite@v1
   with:
     file: links.txt          # one link per line
     # fail-on-broken: "false"  # pass even if some links are broken
 ```
 
-The step fails if any link is broken. It also writes a short report to the run summary. It gives you three outputs: `checked`, `ok` and `broken`. Other settings are `workers`, `timeout`, `version` and `python-version`. See [action.yml](action.yml).
+`@v1` always points to the newest 1.x release. To stay on one exact release, use a full tag like `@v1.1.2`.
 
-The action is not on the GitHub Marketplace yet. Use `@main` for now. A version tag will come with the next release.
+The step fails if any link is broken. It also writes a short report to the run summary. It installs link-check-lite from PyPI. Your links are sent only to the sites they point to.
+
+### Inputs
+
+| Input | Default | What it does |
+|---|---|---|
+| `file` | `links.txt` | Text file with one link per line. Lines that start with `#` are skipped. |
+| `workers` | `5` | How many links to check at the same time. |
+| `timeout` | `10` | Seconds to wait for each link. |
+| `fail-on-broken` | `true` | Set to `false` to pass the step even when some links are broken. |
+| `version` | (empty) | link-check-lite version from PyPI. Empty gets the newest. |
+| `python-version` | `3.12` | Python version to set up. |
+
+### Outputs
+
+| Output | What it is |
+|---|---|
+| `checked` | How many links were checked. |
+| `ok` | How many links were OK. |
+| `broken` | How many links were broken. |
 
 ## Use it from Python
 
