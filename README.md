@@ -202,6 +202,14 @@ command = "uvx"
 args = ["--from", "link-check-lite", "link-check-lite-mcp"]
 ```
 
+### Gemini CLI
+
+This repo is also a Gemini CLI extension. Install it with:
+
+```
+gemini extensions install https://github.com/tidybytetools/link-check-lite
+```
+
 Tool: `check_links(urls, timeout=10.0)`. Send up to 200 links. It returns one result per link.
 
 ## Use it from Python
