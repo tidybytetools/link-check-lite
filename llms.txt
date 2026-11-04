@@ -1,0 +1,19 @@
+# link-check-lite
+
+> Free, MIT-licensed tool that checks web links for their HTTP status code and follows redirects to the final URL. Has a CLI, a Python API and a stdio MCP server.
+
+- Install: `pip install git+https://github.com/tidybytetools/link-check-lite`
+- CLI: `link-check-lite links.txt` prints one line per link (OK/FAIL, status, final URL). Exit 0 if all ok, 1 if any broken or on error.
+- Python: `from link_check_lite import check_link, check_links` returns dicts {url, status, ok, final_url, redirects, error}.
+- MCP: `uvx --from git+https://github.com/tidybytetools/link-check-lite link-check-lite-mcp` exposes `check_links(urls: list[str], timeout=10.0) -> list[dict]` (max 200 links per call).
+
+## Use when
+- You need to know if links work and where redirects end up.
+
+## Don't use when
+- You need sitemaps, CSV input, response times, http vs https checks, look-alike domain warnings, robots.txt handling or CSV/JSON/Markdown reports. The paid version does those: https://tidybyte.gumroad.com/l/LINK_CHECK_PAID_URL
+- You need to know if a link is safe. This tool does not check for malware or phishing.
+
+## Links
+- [README](https://github.com/tidybytetools/link-check-lite/blob/main/README.md)
+- [Paid version](https://tidybyte.gumroad.com/l/LINK_CHECK_PAID_URL)
