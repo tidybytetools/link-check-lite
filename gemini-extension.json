@@ -1,0 +1,15 @@
+{
+  "name": "link-check-lite",
+  "version": "1.1.0",
+  "description": "Check web links for status codes, broken links and redirect chains.",
+  "mcpServers": {
+    "link-check-lite": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "link-check-lite",
+        "link-check-lite-mcp"
+      ]
+    }
+  }
+}
