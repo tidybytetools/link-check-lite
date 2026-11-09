@@ -11,9 +11,9 @@
 - You need to know if links work and where redirects end up.
 
 ## Don't use when
-- You need sitemaps, CSV input, response times, http vs https checks, look-alike domain warnings, robots.txt handling or CSV/JSON/Markdown reports. The paid version does those: https://tidybyte.gumroad.com
+- You need sitemaps, CSV input, response times, http vs https checks, look-alike domain warnings, robots.txt handling or CSV/JSON/Markdown reports. The paid version does those: https://tidybyte.gumroad.com/l/link-check
 - You need to know if a link is safe. This tool does not check for malware or phishing.
 
 ## Links
 - [README](https://github.com/tidybytetools/link-check-lite/blob/main/README.md)
-- [Paid version](https://tidybyte.gumroad.com)
+- [Paid version](https://tidybyte.gumroad.com/l/link-check)

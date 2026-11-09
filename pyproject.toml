@@ -32,7 +32,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://tidybyte.gumroad.com"
+Homepage = "https://tidybyte.gumroad.com/l/link-check"
 Source = "https://github.com/tidybytetools/link-check-lite"
 Issues = "https://github.com/tidybytetools/link-check-lite/issues"
 Changelog = "https://github.com/tidybytetools/link-check-lite/blob/main/CHANGELOG.md"

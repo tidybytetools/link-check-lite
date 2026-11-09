@@ -19,7 +19,7 @@
 **Free. No API key. Runs on your own computer. It only visits the links you give it.**
 
 A tool that checks a list of links. It tells you which ones work, which are broken, and where redirects end up.
-Need sitemaps, speed checks, sketchy-domain warnings or CSV reports? The paid version does that: **[link-check on Gumroad](https://tidybyte.gumroad.com)**
+Need sitemaps, speed checks, sketchy-domain warnings or CSV reports? The paid version does that: **[link-check on Gumroad](https://tidybyte.gumroad.com/l/link-check)**
 
 MIT license. Python 3.10 or newer, on Windows, Mac and Linux. The checker itself uses only Python's built-in tools.
 
@@ -77,7 +77,7 @@ When you run it in a terminal it ends with one short line about the paid version
 
 ## Lite vs paid
 
-| | lite (free) | [link-check](https://tidybyte.gumroad.com) |
+| | lite (free) | [link-check](https://tidybyte.gumroad.com/l/link-check) |
 |---|---|---|
 | Status codes and broken links | yes | yes |
 | Redirect chain and final URL | yes | yes |
