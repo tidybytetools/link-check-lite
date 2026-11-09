@@ -2,6 +2,10 @@
 
 What changed in link-check-lite, newest first.
 
+## 1.1.3 - 2026-11-09
+
+- The Python package, the MCP Registry entry and the GitHub Action now all use version 1.1.3. The v1.1.2 GitHub release did not publish to PyPI, because the package version was still 1.1.1.
+
 ## Action v1.1.2 - 2026-11-04
 
 - New: a GitHub Action (`action.yml`), now on the GitHub Marketplace. Add `uses: tidybytetools/link-check-lite@v1` to a workflow to check a links file on every push.

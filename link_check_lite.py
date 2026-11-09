@@ -8,7 +8,7 @@ https://tidybyte.gumroad.com
 import argparse, sys, time, urllib.error, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
-__version__ = "1.1.1"
+__version__ = "1.1.3"
 PAID_URL = "https://tidybyte.gumroad.com"
 UA = "link-check-lite/1.0 (+https://github.com/tidybytetools/link-check-lite)"
 MAX_HOPS = 10

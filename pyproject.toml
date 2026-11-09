@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "link-check-lite"
-version = "1.1.1"
+version = "1.1.3"
 description = "Check a file of links for status codes and redirects. Has a CLI and an MCP server."
 readme = "README.md"
 license = "MIT"

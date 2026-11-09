@@ -226,7 +226,7 @@ Tool: `check_links(urls, timeout=10.0)`. Send up to 200 links. It returns one re
     # fail-on-broken: "false"  # pass even if some links are broken
 ```
 
-`@v1` always points to the newest 1.x release. To stay on one exact release, use a full tag like `@v1.1.2`.
+`@v1` always points to the newest 1.x release. To stay on one exact release, use a full tag like `@v1.1.3`.
 
 The step fails if any link is broken. It also writes a short report to the run summary. It installs link-check-lite from PyPI. Your links are sent only to the sites they point to.
 
