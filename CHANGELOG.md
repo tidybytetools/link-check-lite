@@ -2,6 +2,11 @@
 
 What changed in link-check-lite, newest first.
 
+## 1.1.4 - 2026-11-09
+
+- Point Homepage, Documentation, and the MCP Registry websiteUrl at the official product page on [tidybytetools.github.io](https://tidybytetools.github.io/tools/link-check/).
+- README: add a clear Links section (Website, Apify cloud version where it exists, Pro on Gumroad) and a short FAQ.
+
 ## 1.1.3 - 2026-11-09
 
 - The Python package, the MCP Registry entry and the GitHub Action now all use version 1.1.3. The v1.1.2 GitHub release did not publish to PyPI, because the package version was still 1.1.1.

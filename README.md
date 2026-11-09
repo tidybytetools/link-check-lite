@@ -23,6 +23,12 @@ Need sitemaps, speed checks, sketchy-domain warnings or CSV reports? The paid ve
 
 MIT license. Python 3.10 or newer, on Windows, Mac and Linux. The checker itself uses only Python's built-in tools.
 
+## Links
+
+- **[Website](https://tidybytetools.github.io/tools/link-check/)** — product page with prices and options
+- **[Apify (no-install cloud version)](https://apify.com/tidybytetools/broken-link-checker)** — pay only for what you use
+- **[Pro version on Gumroad](https://tidybyte.gumroad.com/l/link-check)** — sitemaps, speed checks, sketchy-domain warnings, CSV reports
+
 <!-- mcp-name: io.github.tidybytetools/link-check-lite -->
 
 ## Install
@@ -274,6 +280,19 @@ python3 -m unittest discover tests
 
 The tests use a tiny local web server, so they don't need the internet.
 
+## FAQ
+
+**What does it check?**
+A text file of links, one per line. It reports status codes, redirects, and broken links.
+
+**Does it crawl my whole site?**
+No. It only checks the links you give it. The Pro version can also read sitemaps.
+
+**Do the links I check get sent somewhere else?**
+Only to the sites those links point to. Nothing is sent to us.
+
+**Does it work with AI apps?**
+Yes. It includes a free MCP server. No API key.
 ## License
 
 MIT. See `LICENSE`.
