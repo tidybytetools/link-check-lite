@@ -23,6 +23,8 @@ Need sitemaps, speed checks, sketchy-domain warnings or CSV reports? The paid ve
 
 MIT license. Python 3.10 or newer, on Windows, Mac and Linux. The checker itself uses only Python's built-in tools.
 
+Also searched as: ES: comprobar enlaces rotos, enlaces 404 / PT: verificar links quebrados / DE: defekte Links prüfen / FR: vérifier les liens brisés / JA: リンク切れチェック
+
 ## Links
 
 - **[Website](https://tidybytetools.github.io/tools/link-check/)** — product page with prices and options
@@ -30,6 +32,10 @@ MIT license. Python 3.10 or newer, on Windows, Mac and Linux. The checker itself
 - **[Pro version on Gumroad](https://tidybyte.gumroad.com/l/link-check)** — sitemaps, speed checks, sketchy-domain warnings, CSV reports
 
 <!-- mcp-name: io.github.tidybytetools/link-check-lite -->
+
+## Before and after
+
+Before: a URL, or a text file with one URL per line. After: the HTTP status, the redirect chain, and the final URL for each link. A 404 or 410 is broken. A 301 still works; you may want to update the old address.
 
 ## Install
 
