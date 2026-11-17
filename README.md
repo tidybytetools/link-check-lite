@@ -9,16 +9,35 @@
 
 # link-check-lite
 
+[![Tests](https://github.com/tidybytetools/link-check-lite/actions/workflows/tests.yml/badge.svg)](https://github.com/tidybytetools/link-check-lite/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/tidybytetools/link-check-lite/blob/main/LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
-[![MCP server](https://img.shields.io/badge/MCP-stdio-purple.svg)](#use-it-with-your-ai-app-mcp)
-[![MCP Registry](https://img.shields.io/badge/MCP_Registry-listed-green.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.tidybytetools/link-check-lite)
-[![PyPI downloads](https://img.shields.io/pypi/dm/link-check-lite.svg)](https://pypistats.org/packages/link-check-lite)
-[![Glama score](https://glama.ai/mcp/servers/tidybytetools/link-check-lite/badges/score.svg)](https://glama.ai/mcp/servers/tidybytetools/link-check-lite)
+[![Version](https://img.shields.io/github/v/release/tidybytetools/link-check-lite?label=version)](https://github.com/tidybytetools/link-check-lite/releases)
+[![Apify](https://apify.com/actor-badge?actor=tidybytetools/broken-link-checker)](https://apify.com/tidybytetools/broken-link-checker)
 
 **Free. No API key. Runs on your own computer. It only visits the links you give it.**
 
 A tool that checks a list of links. It tells you which ones work, which are broken, and where redirects end up.
+
+## Example
+
+Input (a text file with one URL per line):
+
+```
+https://example.com/
+https://example.com/this-page-does-not-exist
+```
+
+Output from an actual run of `link-check-lite`:
+
+```
+OK   200 https://example.com/
+FAIL 404 https://example.com/this-page-does-not-exist
+
+2 checked, 1 ok, 1 broken
+```
+
+A 404 or 410 is broken. A 301 still works; you may want to update the old address.
+
 Need sitemaps, speed checks, sketchy-domain warnings or CSV reports? The paid version does that: **[link-check on Gumroad](https://tidybyte.gumroad.com/l/link-check)**
 
 MIT license. Python 3.10 or newer, on Windows, Mac and Linux. The checker itself uses only Python's built-in tools.
@@ -32,10 +51,6 @@ Also searched as: ES: comprobar enlaces rotos, enlaces 404 / PT: verificar links
 - **[Pro version on Gumroad](https://tidybyte.gumroad.com/l/link-check)** — sitemaps, speed checks, sketchy-domain warnings, CSV reports
 
 <!-- mcp-name: io.github.tidybytetools/link-check-lite -->
-
-## Before and after
-
-Before: a URL, or a text file with one URL per line. After: the HTTP status, the redirect chain, and the final URL for each link. A 404 or 410 is broken. A 301 still works; you may want to update the old address.
 
 ## Install
 
@@ -64,16 +79,7 @@ link-check-lite links.txt
 link-check-lite links.txt -w 3 --timeout 20   # gentler and more patient
 ```
 
-Example run:
-
-```
-OK   200 https://example.com/
-OK   200 https://httpbin.org/redirect/2  -> https://httpbin.org/get (2 redirects)
-FAIL 404 https://example.com/old-page
-FAIL --- https://no-such-site.example  ([Errno -2] Name or service not known)
-
-4 checked, 2 ok, 2 broken
-```
+See the real sample run at the top of this page.
 
 Exit code is 0 when every link works and 1 when any link is broken, so it works in a cron job or CI.
 
