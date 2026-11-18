@@ -31,7 +31,7 @@ class T(unittest.TestCase):
                 async with ClientSession(r, w) as s:
                     await s.initialize()
                     tools = await s.list_tools()
-                    self.assertEqual([t.name for t in tools.tools], ["check_links"])
+                    self.assertEqual([t.name for t in tools.tools], ["check_links", "check_status"])
                     ann = tools.tools[0].annotations
                     self.assertIsNotNone(ann)
                     self.assertIs(ann.readOnlyHint, True)
@@ -41,10 +41,16 @@ class T(unittest.TestCase):
                     res = await s.call_tool("check_links", {"urls": [self.b + "/a", self.b + "/gone"]})
                     self.assertFalse(res.isError)
                     data = res.structuredContent["result"] if res.structuredContent else [json.loads(c.text) for c in res.content]
-                    return data
-        data = asyncio.run(go())
+                    res2 = await s.call_tool("check_status", {"urls": [self.b + "/a"]})
+                    self.assertFalse(res2.isError)
+                    data2 = res2.structuredContent["result"] if res2.structuredContent else [json.loads(c.text) for c in res2.content]
+                    return data, data2
+        data, data2 = asyncio.run(go())
         self.assertEqual(data[0]["final_url"], self.b + "/ok")
         self.assertEqual(data[1]["status"], 404)
+        self.assertEqual(data2[0]["final_url"], self.b + "/ok")
+        self.assertIn("ms", data2[0])
+        self.assertIsInstance(data2[0]["ms"], int)
 
 
 if __name__ == "__main__":

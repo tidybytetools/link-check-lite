@@ -4,16 +4,20 @@
 
 - Install: `pip install link-check-lite` (or from GitHub: `pip install git+https://github.com/tidybytetools/link-check-lite`)
 - CLI: `link-check-lite links.txt` prints one line per link (OK/FAIL, status, final URL). Exit 0 if all ok, 1 if any broken or on error.
-- Python: `from link_check_lite import check_link, check_links` returns dicts {url, status, ok, final_url, redirects, error}.
-- MCP: `uvx --from link-check-lite link-check-lite-mcp` exposes `check_links(urls: list[str], timeout=10.0) -> list[dict]` (max 200 links per call).
+- CLI status mode: `link-check-lite status links.txt` (or pipe URLs to `link-check-lite status`) prints each status code, redirect target and response time in milliseconds. Exit 0 if every URL returned a status, 1 if any could not be reached. At most 10 links are checked at a time, with a timeout.
+- Python: `from link_check_lite import check_link, check_links` returns dicts {url, status, ok, final_url, redirects, error, ms}. `ms` is the time in milliseconds.
+- MCP: `uvx --from link-check-lite link-check-lite-mcp` exposes `check_links(urls: list[str], timeout=10.0) -> list[dict]` and `check_status(urls: list[str], timeout=10.0) -> list[dict]` (max 200 links per call).
 
 ## Use when
 - You need to know if links work and where redirects end up.
+- You need a bulk status report with redirect targets and response times.
 
 ## Don't use when
-- You need sitemaps, CSV input, response times, http vs https checks, look-alike domain warnings, robots.txt handling or CSV/JSON/Markdown reports. The paid version does those: https://tidybyte.gumroad.com/l/link-check
+- You need sitemaps, CSV input, a slow-link flag, http vs https checks, look-alike domain warnings, robots.txt handling or CSV/JSON/Markdown reports. The paid version does those: https://tidybyte.gumroad.com/l/link-check
+- You need thousands of URLs on a schedule, or no install. Use our hosted HTTP Status Checker on Apify: https://apify.com/store?search=tidybytetools%20http%20status
 - You need to know if a link is safe. This tool does not check for malware or phishing.
 
 ## Links
 - [README](https://github.com/tidybytetools/link-check-lite/blob/main/README.md)
+- [Hosted HTTP Status Checker on Apify](https://apify.com/store?search=tidybytetools%20http%20status)
 - [Paid version](https://tidybyte.gumroad.com/l/link-check)

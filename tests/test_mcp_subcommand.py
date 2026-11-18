@@ -24,7 +24,7 @@ async def _tools():
 class McpSubcommand(unittest.TestCase):
     def test_mcp_subcommand_lists_tool_with_annotations(self):
         tools = asyncio.run(_tools())
-        self.assertEqual([t.name for t in tools], ["check_links"])
+        self.assertEqual([t.name for t in tools], ["check_links", "check_status"])
         ann = tools[0].annotations
         self.assertIsNotNone(ann)
         for k, v in ANN.items():
@@ -35,9 +35,13 @@ class CliStillWorks(unittest.TestCase):
     def test_version_and_help(self):
         out = subprocess.run([sys.executable, os.path.join(ROOT, "link_check_lite.py"), "--version"], capture_output=True, text=True)
         self.assertEqual(out.returncode, 0)
-        self.assertEqual(out.stdout.strip(), "1.1.4")
+        self.assertEqual(out.stdout.strip(), "1.2.0")
         h = subprocess.run([sys.executable, os.path.join(ROOT, "link_check_lite.py"), "--help"], capture_output=True, text=True)
         self.assertEqual(h.returncode, 0)
+        self.assertIn("status", h.stdout)
+        s = subprocess.run([sys.executable, os.path.join(ROOT, "link_check_lite.py"), "status", "--help"], capture_output=True, text=True)
+        self.assertEqual(s.returncode, 0)
+        self.assertIn("stdin", s.stdout.lower())
 
 
 if __name__ == "__main__":

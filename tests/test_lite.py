@@ -63,6 +63,63 @@ class T(unittest.TestCase):
         with open(p, "a") as f: f.write(f"{self.b}/gone\n")
         with redirect_stdout(io.StringIO()): self.assertEqual(lite.main([p]), 1)
 
+    def test_ms_present(self):
+        r = lite.check_link(self.b + "/ok")
+        self.assertIsInstance(r["ms"], int)
+        self.assertGreaterEqual(r["ms"], 0)
+
+    def test_clamp_workers(self):
+        self.assertEqual(lite.clamp_workers(0), 1)
+        self.assertEqual(lite.clamp_workers(99), lite.MAX_WORKERS)
+        self.assertEqual(lite.clamp_workers(5), 5)
+        self.assertEqual(lite.clamp_workers("3"), 3)
+
+    def test_status_cli(self):
+        d = tempfile.mkdtemp(); p = os.path.join(d, "l.txt")
+        with open(p, "w") as f:
+            f.write(f"# list\n{self.b}/ok\n{self.b}/a\n{self.b}/gone\n")
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            code = lite.main(["status", p])
+        out = buf.getvalue()
+        self.assertEqual(code, 0)  # 404 still returns a status code
+        self.assertIn("200", out)
+        self.assertIn("301", out)
+        self.assertIn("404", out)
+        self.assertIn("ms", out)
+        self.assertIn("->", out)
+        self.assertIn(self.b + "/ok", out)
+        self.assertIn("3 checked", out)
+        self.assertNotIn("apify", out.lower())  # no upsell when not a terminal
+        # columns: status, time, url
+        ok_line = [ln for ln in out.splitlines() if ln.strip().startswith("200") and ln.endswith(self.b + "/ok")][0]
+        self.assertRegex(ok_line, r"^200\s+\d+ms\s+http://")
+
+    def test_status_stdin(self):
+        buf = io.StringIO()
+        old = sys.stdin
+        try:
+            sys.stdin = io.StringIO(f"{self.b}/ok\n")
+            with redirect_stdout(buf):
+                code = lite.main(["status", "-"])
+        finally:
+            sys.stdin = old
+        self.assertEqual(code, 0)
+        self.assertIn("200", buf.getvalue())
+        self.assertIn("1 checked", buf.getvalue())
+
+    def test_status_connection_error_exits_1(self):
+        d = tempfile.mkdtemp(); p = os.path.join(d, "l.txt")
+        with open(p, "w") as f:
+            f.write("http://127.0.0.1:1/x\n")
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(lite.main(["status", p, "--timeout", "1"]), 1)
+
+    def test_status_empty_file(self):
+        d = tempfile.mkdtemp(); p = os.path.join(d, "empty.txt")
+        open(p, "w").close()
+        self.assertEqual(lite.main(["status", p]), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

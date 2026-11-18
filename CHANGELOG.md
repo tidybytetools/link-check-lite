@@ -2,6 +2,13 @@
 
 What changed in link-check-lite, newest first.
 
+## 1.2.0 - 2026-11-17
+
+- New: `link-check-lite status` checks a list of URLs (a file, or stdin) and prints the status code, redirect target and response time for each one. Checks stay polite: at most 10 at a time, with a timeout.
+- New: MCP tool `check_status` does the same job for AI apps.
+- Every check result now includes `ms`, the time in milliseconds.
+- README: a real status-mode example, and an honest line that points people who need thousands of URLs or no install to our hosted HTTP Status Checker on Apify.
+
 ## 1.1.4 - 2026-11-09
 
 - Point Homepage, Documentation, and the MCP Registry websiteUrl at the official product page on [tidybytetools.github.io](https://tidybytetools.github.io/tools/link-check/).
